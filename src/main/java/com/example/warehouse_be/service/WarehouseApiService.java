@@ -4,8 +4,8 @@ import com.example.warehouse_be.entity.Area;
 import com.example.warehouse_be.entity.Board;
 import com.example.warehouse_be.entity.ProductEntity.Product;
 import com.example.warehouse_be.network.UDPClient;
-import com.example.warehouse_be.model.response.ProductDetailResponse;
 import com.example.warehouse_be.protocol.PacketBuilder;
+import com.example.warehouse_be.service.ProductService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
