@@ -22,5 +22,10 @@ public class Product {
     private Date createdDate;
     private Date updatedDate;
 
+    private Color color;
+    private Material material;
+    private ProductType productType;
+    private Size size;
+    private Weight weight;
     private Area area;
 }

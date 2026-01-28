@@ -1,7 +1,7 @@
 package com.example.warehouse_be.controller;
 
 import com.example.warehouse_be.model.response.ProductDetailResponse;
-import com.example.warehouse_be.service.ProductService;
+import com.example.warehouse_be.service.ProductService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

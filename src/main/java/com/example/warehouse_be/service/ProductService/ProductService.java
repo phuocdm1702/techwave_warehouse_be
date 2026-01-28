@@ -1,8 +1,9 @@
-package com.example.warehouse_be.service;
+package com.example.warehouse_be.service.ProductService;
 
 import com.example.warehouse_be.entity.Area;
-import com.example.warehouse_be.entity.ProductEntity.Product;
+import com.example.warehouse_be.entity.ProductEntity.*;
 import com.example.warehouse_be.model.response.ProductDetailResponse;
+import com.example.warehouse_be.service.AreaService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,13 +11,30 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class ProductService {
     private List<Product> productList = new ArrayList<>();
+    private final Random random = new Random();
 
     @Autowired
     private AreaService areaService;
+
+    @Autowired
+    private ColorService colorService;
+
+    @Autowired
+    private MaterialService materialService;
+
+    @Autowired
+    private ProductTypeService productTypeService;
+
+    @Autowired
+    private SizeService sizeService;
+
+    @Autowired
+    private WeightService weightService;
 
     public ProductService() {
     }
@@ -28,6 +46,11 @@ public class ProductService {
 
     private void initData() {
         List<Area> areas = areaService.getAreaList();
+        List<Color> colors = colorService.getColorList();
+        List<Material> materials = materialService.getMaterialList();
+        List<ProductType> productTypes = productTypeService.getProductTypeList();
+        List<Size> sizes = sizeService.getSizeList();
+        List<Weight> weights = weightService.getWeightList();
 
         // === AREA 1 (id=1): Cotton fabric area ===
         productList.add(Product.builder()
@@ -41,6 +64,11 @@ public class ProductService {
                 .unitPrice(85000.0)
                 .createdDate(Date.valueOf("2024-01-15"))
                 .updatedDate(Date.valueOf("2024-05-20"))
+                .color(colors.get(0)) // Trắng
+                .material(materials.get(0)) // Cotton 100%
+                .productType(productTypes.get(0)) // Vải Cotton
+                .size(sizes.get(1)) // Cuộn trung
+                .weight(weights.get(1)) // 10kg
                 .area(areas.get(0)) // Area 1
                 .build());
 
@@ -55,6 +83,11 @@ public class ProductService {
                 .unitPrice(120000.0)
                 .createdDate(Date.valueOf("2024-02-10"))
                 .updatedDate(Date.valueOf("2024-06-15"))
+                .color(colors.get(1)) // Đen
+                .material(materials.get(1)) // Cotton pha Polyester
+                .productType(productTypes.get(0)) // Vải Cotton
+                .size(sizes.get(2)) // Cuộn lớn
+                .weight(weights.get(3)) // 20kg
                 .area(areas.get(0)) // Area 1
                 .build());
 
@@ -69,6 +102,11 @@ public class ProductService {
                 .unitPrice(250000.0)
                 .createdDate(Date.valueOf("2024-03-05"))
                 .updatedDate(Date.valueOf("2024-07-10"))
+                .color(colors.get(6)) // Xám
+                .material(materials.get(0)) // Cotton 100%
+                .productType(productTypes.get(0)) // Vải Cotton
+                .size(sizes.get(1)) // Cuộn trung
+                .weight(weights.get(2)) // 15kg
                 .area(areas.get(0)) // Area 1
                 .build());
 
@@ -83,6 +121,11 @@ public class ProductService {
                 .unitPrice(180000.0)
                 .createdDate(Date.valueOf("2024-04-12"))
                 .updatedDate(Date.valueOf("2024-08-18"))
+                .color(colors.get(4)) // Xanh lá
+                .material(materials.get(0)) // Cotton 100%
+                .productType(productTypes.get(0)) // Vải Cotton
+                .size(sizes.get(0)) // Cuộn nhỏ
+                .weight(weights.get(0)) // 5kg
                 .area(areas.get(0)) // Area 1
                 .build());
 
@@ -97,6 +140,11 @@ public class ProductService {
                 .unitPrice(95000.0)
                 .createdDate(Date.valueOf("2024-05-25"))
                 .updatedDate(Date.valueOf("2024-09-30"))
+                .color(colors.get(2)) // Xanh dương
+                .material(materials.get(1)) // Cotton pha Polyester
+                .productType(productTypes.get(0)) // Vải Cotton
+                .size(sizes.get(2)) // Cuộn lớn
+                .weight(weights.get(4)) // 25kg
                 .area(areas.get(0)) // Area 1
                 .build());
 
@@ -112,6 +160,11 @@ public class ProductService {
                 .unitPrice(95000.0)
                 .createdDate(Date.valueOf("2024-02-20"))
                 .updatedDate(Date.valueOf("2024-06-25"))
+                .color(colors.get(7)) // Nâu
+                .material(materials.get(5)) // Denim
+                .productType(productTypes.get(1)) // Vải Kaki/Jeans
+                .size(sizes.get(2)) // Cuộn lớn
+                .weight(weights.get(3)) // 20kg
                 .area(areas.get(1)) // Area 2
                 .build());
 
@@ -126,6 +179,11 @@ public class ProductService {
                 .unitPrice(150000.0)
                 .createdDate(Date.valueOf("2024-03-15"))
                 .updatedDate(Date.valueOf("2024-07-20"))
+                .color(colors.get(1)) // Đen
+                .material(materials.get(5)) // Denim
+                .productType(productTypes.get(1)) // Vải Kaki/Jeans
+                .size(sizes.get(3)) // Cuộn siêu lớn
+                .weight(weights.get(5)) // 30kg
                 .area(areas.get(1)) // Area 2
                 .build());
 
@@ -140,6 +198,11 @@ public class ProductService {
                 .unitPrice(135000.0)
                 .createdDate(Date.valueOf("2024-04-10"))
                 .updatedDate(Date.valueOf("2024-08-15"))
+                .color(colors.get(2)) // Xanh dương
+                .material(materials.get(5)) // Denim
+                .productType(productTypes.get(1)) // Vải Kaki/Jeans
+                .size(sizes.get(1)) // Cuộn trung
+                .weight(weights.get(2)) // 15kg
                 .area(areas.get(1)) // Area 2
                 .build());
 
@@ -154,6 +217,11 @@ public class ProductService {
                 .unitPrice(165000.0)
                 .createdDate(Date.valueOf("2024-05-18"))
                 .updatedDate(Date.valueOf("2024-09-23"))
+                .color(colors.get(0)) // Trắng
+                .material(materials.get(5)) // Denim
+                .productType(productTypes.get(1)) // Vải Kaki/Jeans
+                .size(sizes.get(2)) // Cuộn lớn
+                .weight(weights.get(3)) // 20kg
                 .area(areas.get(1)) // Area 2
                 .build());
 
@@ -168,6 +236,11 @@ public class ProductService {
                 .unitPrice(125000.0)
                 .createdDate(Date.valueOf("2024-06-22"))
                 .updatedDate(Date.valueOf("2024-10-27"))
+                .color(colors.get(7)) // Nâu
+                .material(materials.get(5)) // Denim
+                .productType(productTypes.get(1)) // Vải Kaki/Jeans
+                .size(sizes.get(3)) // Cuộn siêu lớn
+                .weight(weights.get(6)) // 50kg
                 .area(areas.get(1)) // Area 2
                 .build());
 
@@ -183,6 +256,11 @@ public class ProductService {
                 .unitPrice(450000.0)
                 .createdDate(Date.valueOf("2024-01-25"))
                 .updatedDate(Date.valueOf("2024-05-30"))
+                .color(colors.get(0)) // Trắng
+                .material(materials.get(2)) // Lụa tơ tằm
+                .productType(productTypes.get(2)) // Vải Lụa/Voan
+                .size(sizes.get(0)) // Cuộn nhỏ
+                .weight(weights.get(0)) // 5kg
                 .area(areas.get(2)) // Area 3
                 .build());
 
@@ -197,6 +275,11 @@ public class ProductService {
                 .unitPrice(75000.0)
                 .createdDate(Date.valueOf("2024-02-28"))
                 .updatedDate(Date.valueOf("2024-07-03"))
+                .color(colors.get(5)) // Vàng
+                .material(materials.get(2)) // Lụa tơ tằm
+                .productType(productTypes.get(2)) // Vải Lụa/Voan
+                .size(sizes.get(1)) // Cuộn trung
+                .weight(weights.get(1)) // 10kg
                 .area(areas.get(2)) // Area 3
                 .build());
 
@@ -211,6 +294,11 @@ public class ProductService {
                 .unitPrice(320000.0)
                 .createdDate(Date.valueOf("2024-03-22"))
                 .updatedDate(Date.valueOf("2024-08-27"))
+                .color(colors.get(3)) // Đỏ
+                .material(materials.get(2)) // Lụa tơ tằm
+                .productType(productTypes.get(2)) // Vải Lụa/Voan
+                .size(sizes.get(1)) // Cuộn trung
+                .weight(weights.get(2)) // 15kg
                 .area(areas.get(2)) // Area 3
                 .build());
 
@@ -225,6 +313,11 @@ public class ProductService {
                 .unitPrice(95000.0)
                 .createdDate(Date.valueOf("2024-04-17"))
                 .updatedDate(Date.valueOf("2024-09-22"))
+                .color(colors.get(6)) // Xám
+                .material(materials.get(2)) // Lụa tơ tằm
+                .productType(productTypes.get(2)) // Vải Lụa/Voan
+                .size(sizes.get(0)) // Cuộn nhỏ
+                .weight(weights.get(0)) // 5kg
                 .area(areas.get(2)) // Area 3
                 .build());
 
@@ -239,6 +332,11 @@ public class ProductService {
                 .unitPrice(280000.0)
                 .createdDate(Date.valueOf("2024-05-30"))
                 .updatedDate(Date.valueOf("2024-11-04"))
+                .color(colors.get(4)) // Xanh lá
+                .material(materials.get(2)) // Lụa tơ tằm
+                .productType(productTypes.get(2)) // Vải Lụa/Voan
+                .size(sizes.get(0)) // Cuộn nhỏ
+                .weight(weights.get(1)) // 10kg
                 .area(areas.get(2)) // Area 3
                 .build());
 
@@ -254,6 +352,11 @@ public class ProductService {
                 .unitPrice(680000.0)
                 .createdDate(Date.valueOf("2024-04-05"))
                 .updatedDate(Date.valueOf("2024-09-10"))
+                .color(colors.get(1)) // Đen
+                .material(materials.get(3)) // Len cashmere
+                .productType(productTypes.get(3)) // Vải Len/Nỉ
+                .size(sizes.get(0)) // Cuộn nhỏ
+                .weight(weights.get(0)) // 5kg
                 .area(areas.get(3)) // Area 4
                 .build());
 
@@ -268,6 +371,11 @@ public class ProductService {
                 .unitPrice(125000.0)
                 .createdDate(Date.valueOf("2024-05-12"))
                 .updatedDate(Date.valueOf("2024-10-17"))
+                .color(colors.get(7)) // Nâu
+                .material(materials.get(7)) // Vải nỉ
+                .productType(productTypes.get(3)) // Vải Len/Nỉ
+                .size(sizes.get(2)) // Cuộn lớn
+                .weight(weights.get(4)) // 25kg
                 .area(areas.get(3)) // Area 4
                 .build());
 
@@ -282,6 +390,11 @@ public class ProductService {
                 .unitPrice(420000.0)
                 .createdDate(Date.valueOf("2024-06-18"))
                 .updatedDate(Date.valueOf("2024-11-23"))
+                .color(colors.get(2)) // Xanh dương
+                .material(materials.get(3)) // Len cashmere
+                .productType(productTypes.get(3)) // Vải Len/Nỉ
+                .size(sizes.get(1)) // Cuộn trung
+                .weight(weights.get(2)) // 15kg
                 .area(areas.get(3)) // Area 4
                 .build());
 
@@ -296,6 +409,11 @@ public class ProductService {
                 .unitPrice(98000.0)
                 .createdDate(Date.valueOf("2024-07-24"))
                 .updatedDate(Date.valueOf("2024-12-29"))
+                .color(colors.get(6)) // Xám
+                .material(materials.get(7)) // Vải nỉ
+                .productType(productTypes.get(3)) // Vải Len/Nỉ
+                .size(sizes.get(1)) // Cuộn trung
+                .weight(weights.get(3)) // 20kg
                 .area(areas.get(3)) // Area 4
                 .build());
 
@@ -310,6 +428,11 @@ public class ProductService {
                 .unitPrice(750000.0)
                 .createdDate(Date.valueOf("2024-08-29"))
                 .updatedDate(Date.valueOf("2025-02-03"))
+                .color(colors.get(5)) // Vàng
+                .material(materials.get(3)) // Len cashmere
+                .productType(productTypes.get(3)) // Vải Len/Nỉ
+                .size(sizes.get(0)) // Cuộn nhỏ
+                .weight(weights.get(1)) // 10kg
                 .area(areas.get(3)) // Area 4
                 .build());
 
@@ -325,6 +448,11 @@ public class ProductService {
                 .unitPrice(520000.0)
                 .createdDate(Date.valueOf("2024-07-25"))
                 .updatedDate(Date.valueOf("2024-12-30"))
+                .color(colors.get(1)) // Đen
+                .material(materials.get(6)) // Vải da PU
+                .productType(productTypes.get(4)) // Vải Đặc Biệt
+                .size(sizes.get(4)) // Tấm vải
+                .weight(weights.get(1)) // 10kg
                 .area(areas.get(4)) // Area 5
                 .build());
 
@@ -339,6 +467,11 @@ public class ProductService {
                 .unitPrice(88000.0)
                 .createdDate(Date.valueOf("2024-08-14"))
                 .updatedDate(Date.valueOf("2025-01-19"))
+                .color(colors.get(0)) // Trắng
+                .material(materials.get(6)) // Polyester
+                .productType(productTypes.get(5)) // Vải Thể Thao
+                .size(sizes.get(1)) // Cuộn trung
+                .weight(weights.get(1)) // 10kg
                 .area(areas.get(4)) // Area 5
                 .build());
 
@@ -353,6 +486,11 @@ public class ProductService {
                 .unitPrice(65000.0)
                 .createdDate(Date.valueOf("2024-09-09"))
                 .updatedDate(Date.valueOf("2025-02-14"))
+                .color(colors.get(2)) // Xanh dương
+                .material(materials.get(5)) // Polyester
+                .productType(productTypes.get(5)) // Vải Thể Thao
+                .size(sizes.get(3)) // Cuộn siêu lớn
+                .weight(weights.get(6)) // 50kg
                 .area(areas.get(4)) // Area 5
                 .build());
 
@@ -367,6 +505,11 @@ public class ProductService {
                 .unitPrice(320000.0)
                 .createdDate(Date.valueOf("2024-10-11"))
                 .updatedDate(Date.valueOf("2025-03-16"))
+                .color(colors.get(7)) // Nâu
+                .material(materials.get(7)) // Vải nỉ
+                .productType(productTypes.get(3)) // Vải Len/Nỉ
+                .size(sizes.get(0)) // Cuộn nhỏ
+                .weight(weights.get(0)) // 5kg
                 .area(areas.get(4)) // Area 5
                 .build());
 
@@ -381,6 +524,11 @@ public class ProductService {
                 .unitPrice(115000.0)
                 .createdDate(Date.valueOf("2024-11-20"))
                 .updatedDate(Date.valueOf("2025-04-25"))
+                .color(colors.get(6)) // Xám
+                .material(materials.get(6)) // Polyester
+                .productType(productTypes.get(7)) // Vải Trang Trí
+                .size(sizes.get(2)) // Cuộn lớn
+                .weight(weights.get(3)) // 20kg
                 .area(areas.get(4)) // Area 5
                 .build());
     }
