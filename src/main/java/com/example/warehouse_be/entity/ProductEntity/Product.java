@@ -1,31 +1,50 @@
 package com.example.warehouse_be.entity.ProductEntity;
 
-import com.example.warehouse_be.entity.Area;
+import jakarta.persistence.*;
 import lombok.*;
-import java.sql.Date;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.time.Instant;
 
 @Getter
 @Setter
+@Entity
+@Table(name = "product")
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Builder
+@ToString
 public class Product {
-    private Integer productId;
-    private String productCode;
-    private String productName;
-    private String serialNumber;
-    private Integer currentStock;
-    private Integer lowStockThreshold;
-    private Integer maxStockThreshold;
-    private Double unitPrice;
-    private Date createdDate;
-    private Date updatedDate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
+    private Integer id;
 
-    private Color color;
-    private Material material;
-    private ProductType productType;
-    private Size size;
-    private Weight weight;
-    private Area area;
+    @Column(name = "product_code")
+    private String productCode;
+
+    @Column(name = "product_name")
+    private String productName;
+
+    @Column(name = "group_reference")
+    private String groupReference;
+
+    @Column(name = "description")
+    private String description;
+
+    @ColumnDefault("1")
+    @Column(name = "is_active")
+    private Boolean isActive;
+
+    @ColumnDefault("CURRENT_TIMESTAMP")
+    @Column(name = "created_at")
+    private Instant createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JoinColumn(name = "type_id",referencedColumnName = "type_id")
+    private ProductType type;
+
 }
