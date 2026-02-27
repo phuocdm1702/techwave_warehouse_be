@@ -5,7 +5,7 @@ import com.example.warehouse_be.entity.Board;
 import com.example.warehouse_be.entity.ProductEntity.Product;
 import com.example.warehouse_be.network.UDPClient;
 import com.example.warehouse_be.protocol.PacketBuilder;
-import com.example.warehouse_be.service.ProductService.ProductService;
+import com.example.warehouse_be.service.ProductServices.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -102,25 +102,14 @@ public class WarehouseApiService {
             Product currentProduct = this.lastScannedProduct;
             rfidToProductMap.put(rfidTag, currentProduct);
 
-            Area area = currentProduct.getArea();
-            if (area != null) {
-                controlLed(area, true);
-            }
-
             this.lastScannedProduct = null; // Reset
-            return "IMPORT: Associated RFID tag '" + rfidTag + "' with product '" + currentProduct.getProductName() + "'. LED for area '" + area.getAreaName() + "' is ON.";
+            return "IMPORT: Associated RFID tag '" + rfidTag + "' with product '" + currentProduct.getProductName() + "'.";
 
         } else {
             if (rfidToProductMap.containsKey(rfidTag)) {
                 Product productToExp = rfidToProductMap.get(rfidTag);
-                Area area = productToExp.getArea();
-
-                if (area != null) {
-                    startFlashingLed(area);
-                }
-
                 this.rfidWaitingForExportConfirmation = rfidTag;
-                return "EXPORT: Found product '" + productToExp.getProductName() + "'. LED for area '" + area.getAreaName() + "' is now flashing. Please find the item and call the '/confirm' endpoint.";
+                return "EXPORT: Found product '" + productToExp.getProductName() + "'. Please find the item and call the '/confirm' endpoint.";
             } else {
                 return "INFO: Scanned free RFID tag '" + rfidTag + "'. Not associated with any product.";
             }
@@ -192,10 +181,6 @@ public class WarehouseApiService {
     public Product findProductByRfid(String rfidTag) {
         Product product = rfidToProductMap.get(rfidTag);
         if (product != null) {
-            Area area = product.getArea();
-            if (area != null) {
-                startFlashingLed(area);
-            }
             this.rfidWaitingForExportConfirmation = rfidTag;
         }
         return product;

@@ -1,7 +1,6 @@
 package com.example.warehouse_be.controller;
 
 import com.example.warehouse_be.entity.ProductEntity.Product;
-import com.example.warehouse_be.model.response.ProductDetailResponse;
 import com.example.warehouse_be.service.WarehouseApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
